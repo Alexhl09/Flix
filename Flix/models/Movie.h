@@ -11,14 +11,16 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 @interface Movie : NSObject
-@property UIImage * movieImage;
-@property NSMutableArray * arrayGenres;
-@property NSMutableString * title;
-@property NSMutableString * descriptionMovie;
-@property BOOL status;
-@property double votes;
+@property (strong, nonatomic)  NSURL * movieImage;
+@property (strong, nonatomic)  NSURL * backdrop;
+@property (strong, nonatomic)  NSMutableArray * arrayGenres;
+@property (strong, nonatomic)  NSMutableString * title;
+@property (strong, nonatomic)  NSMutableString * descriptionMovie;
 
-- (instancetype) initWith : (UIImage *) image : (NSMutableArray *) genres : (NSMutableString * ) title : (NSMutableString *) descriptionMovie : (BOOL) status : (double) votes;
+@property double votes;
+@property int idMovie;
+
+- (instancetype) initWith : (NSURL *) image : (NSMutableArray *) genres : (NSMutableString * ) title : (NSMutableString *) descriptionMovie : (double) votes : (int) idMovie : (NSURL*) backdrop;
 
 
 

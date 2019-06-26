@@ -16,7 +16,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 
 @property NSMutableArray * arrayMoviesNowPlaying;
+@property Movie * myMovieSelected;
 
+-(void) getMoviesNowPlaying;
 @end
 
 NS_ASSUME_NONNULL_END

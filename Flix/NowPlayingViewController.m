@@ -9,25 +9,47 @@
 #import "NowPlayingViewController.h"
 #import "Movie.h"
 #import "movieCellCollectionViewCell.h"
-
+#import "DetailMovie.h"
+@import AFNetworking;
 @interface NowPlayingViewController ()
 
 @end
 
 @implementation NowPlayingViewController
-@synthesize collectionView, arrayMoviesNowPlaying;
+@synthesize collectionView, arrayMoviesNowPlaying, myMovieSelected;
 
 
 
-
+- (void)viewWillAppear:(BOOL)animated{
+     self.arrayMoviesNowPlaying = [NSMutableArray new];
+    self.myMovieSelected = [Movie new];
+    [self getMoviesNowPlaying];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     // This View controller is going to be the delegate and data source of my collection view
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+   
     
+    CGFloat time1 = 3.49;
+    CGFloat time2 = 8.13;
+    
+    // Delay 2 seconds
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        CGFloat newTime = time1 + time2;
+        [self.collectionView reloadData];
+        NSLog(@"%lu",self.arrayMoviesNowPlaying.count);
+    });
+
+    // Do any additional setup after loading the view.
+}
+
+
+
+-(void) getMoviesNowPlaying{
     NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"]
@@ -46,27 +68,53 @@
                                                         NSArray *movies = dataDictionary[@"results"];
                                                         
                                                         for (NSDictionary *movie in movies){
-                                                            NSLog(@"%@",movie[@"title"]);
-                                                            NSLog(@"%@",movie[@"original_language"]);
-                                                            NSLog(@"%@",movie[@"title"]);
-                                                            NSLog(@"%@",movie[@"vote_average"]);
-                                                            NSLog(@"%@",movie[@"overview"]);
-                                                            NSLog(@"%@",movie[@"poster_path"]);
+                                                            NSMutableArray * genresArray = [NSMutableArray new];
+                                                            
                                                             NSArray *genres = movie[@"genre_ids"];
-                                                              for (NSString *genre in genres){
-                                                                  NSLog(@"%@",genre);
+                                                            for (NSString *genre in genres){
+                                                                [genresArray addObject:genre];
+                                                                
                                                             }
+                                                            NSString * baseURLString = @"https://image.tmdb.org/t/p/w500";
+                                                            NSString * posterURLString= movie[@"poster_path"];
+                                                            NSString * fullPosterURLString = [baseURLString stringByAppendingString:posterURLString];
+                                                            NSURL *posterURL = [NSURL URLWithString:fullPosterURLString];
                                                             
                                                             
+                                                            NSString * posterURLStringBack = movie[@"backdrop_path"];
+                                                            NSString * fullPosterURLStringBack = [baseURLString stringByAppendingString:posterURLStringBack];
+                                                            NSURL *posterURLBack = [NSURL URLWithString:fullPosterURLStringBack];
+                                                            
+                                                            int idMovie = [[movie objectForKey:@"id"] intValue];
+                                                            int rateMovie = [[movie objectForKey:@"vote_average"] doubleValue];
+                                                            NSLog(@"%@",movie[@"overview"] );
+                                                            Movie * myMovie = [[Movie alloc] initWith:posterURL :genresArray :movie[@"title"] : movie[@"overview"]  : rateMovie : idMovie : posterURLBack] ;
+                                                            NSLog(@"%@",posterURL);
+                                                            
+                                                            [self.arrayMoviesNowPlaying addObject:myMovie];
+                                                            
+                                                            
+                                                           
+                                                            //                                                            Movie * myMovieToBeAdded = [Movie init]
+                                                           
                                                         }
                                                         
-                                           
+                                                        
+//                                                         [self.collectionView reloadData];
+                                                        
+                                                        
+                                                       
                                                     }
+                                            
                                                 }];
     [dataTask resume];
     
-    // Do any additional setup after loading the view.
 }
+/**
+ This function get the information of each movie that is now playing and store the information in an array of Movies
+ - parameters:
+ - None
+ */
 
 
 
@@ -82,14 +130,33 @@
 */
 
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
-    movieCellCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-
     
-    return cell;
+    static NSString *celldentifier = @"cell";
+    
+    movieCellCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:celldentifier forIndexPath:indexPath];
+    if (!myCell) {
+    }
+    [myCell.imageMovie setImageWithURL: [arrayMoviesNowPlaying[indexPath.row] movieImage]];
+    return myCell;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
+    self.myMovieSelected = arrayMoviesNowPlaying[indexPath.row];
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    [self performSegueWithIdentifier:@"info" sender:self];
+    
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if([segue.identifier  isEqual: @"info"]){
+        DetailMovie * vc = [segue destinationViewController];
+        [vc setMyMovie:myMovieSelected];
+      
+    }
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 0;
+    return [arrayMoviesNowPlaying count];
 }
 
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
