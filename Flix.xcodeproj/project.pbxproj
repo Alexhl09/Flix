@@ -12,6 +12,7 @@
 		EAA4B52322C3FC720098BFEC /* movieCellCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52222C3FC720098BFEC /* movieCellCollectionViewCell.m */; };
 		EAA4B52522C3FE200098BFEC /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52422C3FE200098BFEC /* Movie.m */; };
 		EAA4B52922C436430098BFEC /* DetailMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52822C436430098BFEC /* DetailMovie.m */; };
+		EAA4B52C22C444610098BFEC /* Upcoming.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52B22C444610098BFEC /* Upcoming.m */; };
 		EADCDD4622C3EA600096032C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EADCDD4522C3EA600096032C /* AppDelegate.m */; };
 		EADCDD4C22C3EA600096032C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADCDD4A22C3EA600096032C /* Main.storyboard */; };
 		EADCDD4E22C3EA600096032C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADCDD4D22C3EA600096032C /* Assets.xcassets */; };
@@ -31,6 +32,8 @@
 		EAA4B52622C3FE2B0098BFEC /* Movie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Movie.h; sourceTree = "<group>"; };
 		EAA4B52722C436430098BFEC /* DetailMovie.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DetailMovie.h; sourceTree = "<group>"; };
 		EAA4B52822C436430098BFEC /* DetailMovie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailMovie.m; sourceTree = "<group>"; };
+		EAA4B52A22C444610098BFEC /* Upcoming.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Upcoming.h; sourceTree = "<group>"; };
+		EAA4B52B22C444610098BFEC /* Upcoming.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Upcoming.m; sourceTree = "<group>"; };
 		EADCDD4122C3EA600096032C /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADCDD4422C3EA600096032C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EADCDD4522C3EA600096032C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -122,6 +125,8 @@
 				EAA4B51D22C3FBF10098BFEC /* NowPlayingViewController.m */,
 				EAA4B52722C436430098BFEC /* DetailMovie.h */,
 				EAA4B52822C436430098BFEC /* DetailMovie.m */,
+				EAA4B52A22C444610098BFEC /* Upcoming.h */,
+				EAA4B52B22C444610098BFEC /* Upcoming.m */,
 			);
 			path = Flix;
 			sourceTree = "<group>";
@@ -243,6 +248,7 @@
 				EAA4B51E22C3FBF10098BFEC /* NowPlayingViewController.m in Sources */,
 				EADCDD5422C3EA600096032C /* main.m in Sources */,
 				EAA4B52522C3FE200098BFEC /* Movie.m in Sources */,
+				EAA4B52C22C444610098BFEC /* Upcoming.m in Sources */,
 				EADCDD4622C3EA600096032C /* AppDelegate.m in Sources */,
 				EAA4B52322C3FC720098BFEC /* movieCellCollectionViewCell.m in Sources */,
 				EAA4B52922C436430098BFEC /* DetailMovie.m in Sources */,

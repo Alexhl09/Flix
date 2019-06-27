@@ -21,9 +21,7 @@
 
 
 - (void)viewWillAppear:(BOOL)animated{
-     self.arrayMoviesNowPlaying = [NSMutableArray new];
-    self.myMovieSelected = [Movie new];
-    [self getMoviesNowPlaying];
+
 }
 
 - (void)viewDidLoad {
@@ -32,7 +30,13 @@
     // This View controller is going to be the delegate and data source of my collection view
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-   
+    self.arrayMoviesNowPlaying = [NSMutableArray new];
+    self.arrayMoviesNowPlayingFiltered = [NSMutableArray new];
+    self.myMovieSelected = [Movie new];
+    [self getMoviesNowPlaying];
+    [_activityView setHidden:NO];
+    
+    [_activityView startAnimating];
     
     CGFloat time1 = 3.49;
     CGFloat time2 = 8.13;
@@ -42,14 +46,34 @@
         CGFloat newTime = time1 + time2;
         [self.collectionView reloadData];
         NSLog(@"%lu",self.arrayMoviesNowPlaying.count);
+   
+        [self->_activityView setHidden:YES];
+        [self->_activityView stopAnimating];
     });
+    
+    
+    self.refreshControl = [UIRefreshControl new];
+    [self.refreshControl addTarget:self action:@selector(getMoviesNowPlaying) forControlEvents:UIControlEventValueChanged];
+    [self.collectionView addSubview:self.refreshControl];
+    [self.collectionView insertSubview:self.refreshControl atIndex:0];
+    
+    _searchBar.delegate = self;
+    
+    
 
     // Do any additional setup after loading the view.
 }
 
-
-
+- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = YES;
+}
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    self.searchBar.showsCancelButton = NO;
+    self.searchBar.text = @"";
+    [self.searchBar resignFirstResponder];
+}
 -(void) getMoviesNowPlaying{
+    [self.arrayMoviesNowPlaying removeAllObjects];
     NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"]
@@ -105,8 +129,13 @@
                                                         
                                                        
                                                     }
-                                            
+                                                    [self.collectionView reloadData];
+                                                    self.arrayMoviesNowPlayingFiltered = self.arrayMoviesNowPlaying;
                                                 }];
+    [self.refreshControl endRefreshing];
+    [self->_activityView setHidden:YES];
+    [self->_activityView stopAnimating];
+    
     [dataTask resume];
     
 }
@@ -136,12 +165,32 @@
     movieCellCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:celldentifier forIndexPath:indexPath];
     if (!myCell) {
     }
-    [myCell.imageMovie setImageWithURL: [arrayMoviesNowPlaying[indexPath.row] movieImage]];
+    [myCell.imageMovie setImageWithURL: [_arrayMoviesNowPlayingFiltered[indexPath.row] movieImage]];
     return myCell;
+}
+- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+    
+    if (searchText.length != 0) {
+        
+        NSPredicate *predicate = [NSPredicate predicateWithBlock:^BOOL(Movie *evaluatedObject, NSDictionary *bindings) {
+            return [evaluatedObject.title containsString:searchText];
+        }];
+        self.arrayMoviesNowPlayingFiltered = [self.arrayMoviesNowPlaying filteredArrayUsingPredicate:predicate];
+        
+        NSLog(@"%@", self.arrayMoviesNowPlayingFiltered);
+        
+    }
+    else {
+        self.arrayMoviesNowPlayingFiltered = self.arrayMoviesNowPlaying;
+    }
+    
+    [self.collectionView reloadData];
+    
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath{
-    self.myMovieSelected = arrayMoviesNowPlaying[indexPath.row];
+    self.myMovieSelected = _arrayMoviesNowPlayingFiltered[indexPath.row];
+    NSLog(@"%@",myMovieSelected.title);
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     [self performSegueWithIdentifier:@"info" sender:self];
     
@@ -156,7 +205,7 @@
 }
 
 - (NSInteger)collectionView:(nonnull UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return [arrayMoviesNowPlaying count];
+    return [_arrayMoviesNowPlayingFiltered count];
 }
 
 - (void)encodeWithCoder:(nonnull NSCoder *)aCoder {
