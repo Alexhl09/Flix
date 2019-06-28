@@ -148,7 +148,7 @@
                                                             //                                                            Movie * myMovieToBeAdded = [Movie init]
                                                            
                                                         }
-                                                        
+
                                                         
 //                                                         [self.collectionView reloadData];
                                                         
@@ -163,6 +163,7 @@
                                                     
                                                     self.arrayMoviesNowPlayingFiltered = self.arrayMoviesNowPlaying;
                                                     [self.collectionView reloadData];
+
                                                 }];
  
 
@@ -204,23 +205,27 @@
     [myCell.imageMovie setImageWithURLRequest:request placeholderImage:nil
                                     success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                         
+                                        [UIView transitionWithView:myCell.imageMovie duration:2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                            [myCell.imageMovie setImage:image];
+                                        } completion:nil];
+                                        
                                         // imageResponse will be nil if the image is cached
-                                        if (imageResponse) {
-                                            NSLog(@"Image was NOT cached, fade in image");
-                                            myCell.imageMovie.alpha = 0.0;
-                               
-                                            myCell.imageMovie.image = image;
-                                            
-                                            //Animate UIImageView back to alpha 1 over 0.3sec
-                                            [UIView animateWithDuration:0.3 animations:^{
-                                                 myCell.imageMovie.alpha = 1.0;
-                               
-                                            }];
-                                        }
-                                        else {
-                                            NSLog(@"Image was cached so just update the image");
-                                            myCell.imageMovie.image = image;
-                                        }
+//                                        if (imageResponse) {
+//                                            NSLog(@"Image was NOT cached, fade in image");
+//                                            myCell.imageMovie.alpha = 0.0;
+//                               
+//                                            myCell.imageMovie.image = image;
+//                                            
+//                                            //Animate UIImageView back to alpha 1 over 0.3sec
+//                                            [UIView animateWithDuration:0.3 animations:^{
+//                                                 myCell.imageMovie.alpha = 1.0;
+//                               
+//                                            }];
+//                                        }
+//                                        else {
+//                                            NSLog(@"Image was cached so just update the image");
+//                                            myCell.imageMovie.image = image;
+//                                        }
                                     }
                                     failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
                                         // do something for the failure condition

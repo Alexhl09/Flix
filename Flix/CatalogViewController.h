@@ -21,6 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void) setMySelectedMovie : (Movie *) myMovie;
 /// This method fetch all the movies from the API
 -(void) getGenres;
+@property NSMutableArray * myGenres;
 @end
 
 NS_ASSUME_NONNULL_END

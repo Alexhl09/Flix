@@ -18,7 +18,7 @@
 @end
 
 @implementation CatalogViewController
-@synthesize tableView, myCategories,arrayMoviesNowPlaying;
+@synthesize tableView, myCategories,arrayMoviesNowPlaying,myGenres;
 static  Movie * mySelectedMovie;
 /// This methods are the setter and getter of my static variable that staores the movie selected in the collection view
 + (Movie *) mySelectedMovie { return mySelectedMovie; }
@@ -30,6 +30,7 @@ static  Movie * mySelectedMovie;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     myCategories = [[NSMutableArray alloc] init];
+    myGenres = [NSMutableArray new];
     [self getGenres];
     self.arrayMoviesNowPlaying = [NSMutableArray new];
 
@@ -126,7 +127,7 @@ static  Movie * mySelectedMovie;
                                                             int idGenre = [[valuesGenres objectForKey:@"id"] intValue];
                                                             Genre * myGenre = [[Genre alloc] initWith: valuesGenres[@"name"] :idGenre];
                                                             [self->myCategories addObject: myGenre];
-                                                        
+                                                            [self->myGenres addObject: [NSString stringWithFormat:@"%@" , myGenre.name ]];
                                                         }
                                                    
                                                     }
@@ -170,6 +171,8 @@ static  Movie * mySelectedMovie;
     return cell;
     
 }
+
+
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section{
 return [myCategories[section] name];
