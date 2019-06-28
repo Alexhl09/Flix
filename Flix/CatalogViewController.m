@@ -37,6 +37,10 @@ static  Movie * mySelectedMovie;
     [self getMoviesNowPlaying];
     // Do any additional setup after loading the view.
 }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
+
 
 /// This method help me to get all the data and store it in the array of movies that i have
 -(void) getMoviesNowPlaying{
