@@ -13,6 +13,12 @@
 		EAA4B52522C3FE200098BFEC /* Movie.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52422C3FE200098BFEC /* Movie.m */; };
 		EAA4B52922C436430098BFEC /* DetailMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52822C436430098BFEC /* DetailMovie.m */; };
 		EAA4B52C22C444610098BFEC /* Upcoming.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52B22C444610098BFEC /* Upcoming.m */; };
+		EAA4B52F22C4471F0098BFEC /* CatalogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B52E22C4471F0098BFEC /* CatalogViewController.m */; };
+		EAA4B53222C447700098BFEC /* catalogTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B53122C447700098BFEC /* catalogTableViewCell.m */; };
+		EAA4B55D22C54C700098BFEC /* Genre.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B55C22C54C700098BFEC /* Genre.m */; };
+		EAA4B56022C553660098BFEC /* movieCategoryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B55F22C553660098BFEC /* movieCategoryCollectionViewCell.m */; };
+		EAA4B56322C5E4900098BFEC /* TrailerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EAA4B56222C5E4900098BFEC /* TrailerViewController.m */; };
+		EAA4B56522C5EEBA0098BFEC /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EAA4B56422C5EEBA0098BFEC /* WebKit.framework */; };
 		EADCDD4622C3EA600096032C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EADCDD4522C3EA600096032C /* AppDelegate.m */; };
 		EADCDD4C22C3EA600096032C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EADCDD4A22C3EA600096032C /* Main.storyboard */; };
 		EADCDD4E22C3EA600096032C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EADCDD4D22C3EA600096032C /* Assets.xcassets */; };
@@ -34,6 +40,17 @@
 		EAA4B52822C436430098BFEC /* DetailMovie.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DetailMovie.m; sourceTree = "<group>"; };
 		EAA4B52A22C444610098BFEC /* Upcoming.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Upcoming.h; sourceTree = "<group>"; };
 		EAA4B52B22C444610098BFEC /* Upcoming.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Upcoming.m; sourceTree = "<group>"; };
+		EAA4B52D22C4471F0098BFEC /* CatalogViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CatalogViewController.h; sourceTree = "<group>"; };
+		EAA4B52E22C4471F0098BFEC /* CatalogViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CatalogViewController.m; sourceTree = "<group>"; };
+		EAA4B53022C447700098BFEC /* catalogTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = catalogTableViewCell.h; sourceTree = "<group>"; };
+		EAA4B53122C447700098BFEC /* catalogTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = catalogTableViewCell.m; sourceTree = "<group>"; };
+		EAA4B55B22C54C670098BFEC /* Genre.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Genre.h; sourceTree = "<group>"; };
+		EAA4B55C22C54C700098BFEC /* Genre.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Genre.m; sourceTree = "<group>"; };
+		EAA4B55E22C553660098BFEC /* movieCategoryCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = movieCategoryCollectionViewCell.h; sourceTree = "<group>"; };
+		EAA4B55F22C553660098BFEC /* movieCategoryCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = movieCategoryCollectionViewCell.m; sourceTree = "<group>"; };
+		EAA4B56122C5E4900098BFEC /* TrailerViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TrailerViewController.h; sourceTree = "<group>"; };
+		EAA4B56222C5E4900098BFEC /* TrailerViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TrailerViewController.m; sourceTree = "<group>"; };
+		EAA4B56422C5EEBA0098BFEC /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
 		EADCDD4122C3EA600096032C /* Flix.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Flix.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EADCDD4422C3EA600096032C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EADCDD4522C3EA600096032C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -49,6 +66,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EAA4B56522C5EEBA0098BFEC /* WebKit.framework in Frameworks */,
 				3A9C8B1DB26113449A98B77B /* Pods_Flix.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -59,6 +77,7 @@
 		11D7897A9E63546F9AC7E9A7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				EAA4B56422C5EEBA0098BFEC /* WebKit.framework */,
 				39E4F46045C13CECDA24EC5F /* Pods_Flix.framework */,
 			);
 			name = Frameworks;
@@ -78,6 +97,10 @@
 			children = (
 				EAA4B52122C3FC720098BFEC /* movieCellCollectionViewCell.h */,
 				EAA4B52222C3FC720098BFEC /* movieCellCollectionViewCell.m */,
+				EAA4B53022C447700098BFEC /* catalogTableViewCell.h */,
+				EAA4B53122C447700098BFEC /* catalogTableViewCell.m */,
+				EAA4B55E22C553660098BFEC /* movieCategoryCollectionViewCell.h */,
+				EAA4B55F22C553660098BFEC /* movieCategoryCollectionViewCell.m */,
 			);
 			path = cell;
 			sourceTree = "<group>";
@@ -87,6 +110,8 @@
 			children = (
 				EAA4B52422C3FE200098BFEC /* Movie.m */,
 				EAA4B52622C3FE2B0098BFEC /* Movie.h */,
+				EAA4B55B22C54C670098BFEC /* Genre.h */,
+				EAA4B55C22C54C700098BFEC /* Genre.m */,
 			);
 			path = models;
 			sourceTree = "<group>";
@@ -127,6 +152,10 @@
 				EAA4B52822C436430098BFEC /* DetailMovie.m */,
 				EAA4B52A22C444610098BFEC /* Upcoming.h */,
 				EAA4B52B22C444610098BFEC /* Upcoming.m */,
+				EAA4B52D22C4471F0098BFEC /* CatalogViewController.h */,
+				EAA4B52E22C4471F0098BFEC /* CatalogViewController.m */,
+				EAA4B56122C5E4900098BFEC /* TrailerViewController.h */,
+				EAA4B56222C5E4900098BFEC /* TrailerViewController.m */,
 			);
 			path = Flix;
 			sourceTree = "<group>";
@@ -249,7 +278,12 @@
 				EADCDD5422C3EA600096032C /* main.m in Sources */,
 				EAA4B52522C3FE200098BFEC /* Movie.m in Sources */,
 				EAA4B52C22C444610098BFEC /* Upcoming.m in Sources */,
+				EAA4B56322C5E4900098BFEC /* TrailerViewController.m in Sources */,
+				EAA4B53222C447700098BFEC /* catalogTableViewCell.m in Sources */,
+				EAA4B52F22C4471F0098BFEC /* CatalogViewController.m in Sources */,
 				EADCDD4622C3EA600096032C /* AppDelegate.m in Sources */,
+				EAA4B56022C553660098BFEC /* movieCategoryCollectionViewCell.m in Sources */,
+				EAA4B55D22C54C700098BFEC /* Genre.m in Sources */,
 				EAA4B52322C3FC720098BFEC /* movieCellCollectionViewCell.m in Sources */,
 				EAA4B52922C436430098BFEC /* DetailMovie.m in Sources */,
 			);

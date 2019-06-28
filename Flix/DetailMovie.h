@@ -15,6 +15,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (weak, nonatomic) IBOutlet UIImageView *mainImage;
 @property (weak, nonatomic) IBOutlet UILabel *titleMovie;
 @property (weak, nonatomic) IBOutlet UITextView *movieDescription;
+@property (weak, nonatomic) IBOutlet UIButton *trailerButton;
 @property Movie * myMovie;
 @end
 

@@ -16,6 +16,8 @@
 @end
 
 @implementation NowPlayingViewController
+
+/// Synthesize my properties in order to get setters and getters
 @synthesize collectionView, arrayMoviesNowPlaying, myMovieSelected;
 
 
@@ -26,37 +28,42 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-   
-    // This View controller is going to be the delegate and data source of my collection view
+    /// My collection view delegate and data source is going to be this view
+
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
+    
+    /// I had a problem; I didn't know that before using a NSMutableArray we have to allocate it and initialize it
+
     self.arrayMoviesNowPlaying = [NSMutableArray new];
     self.arrayMoviesNowPlayingFiltered = [NSMutableArray new];
     self.myMovieSelected = [Movie new];
-    [self getMoviesNowPlaying];
+    
+    /// Set my activityView to be visible and start animating
+
     [_activityView setHidden:NO];
     
     [_activityView startAnimating];
     
-    CGFloat time1 = 3.49;
-    CGFloat time2 = 8.13;
-    
-    // Delay 2 seconds
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        CGFloat newTime = time1 + time2;
-        [self.collectionView reloadData];
-        NSLog(@"%lu",self.arrayMoviesNowPlaying.count);
-   
-        [self->_activityView setHidden:YES];
-        [self->_activityView stopAnimating];
-    });
+    /// Fetch all the data and store it in my own array of objects of type Movie
+
+    [self getMoviesNowPlaying];
+
+
     
     
+    /// I create a refresh Control
+
     self.refreshControl = [UIRefreshControl new];
     [self.refreshControl addTarget:self action:@selector(getMoviesNowPlaying) forControlEvents:UIControlEventValueChanged];
+    
+    ///Use the refresh control in the collection view
+
     [self.collectionView addSubview:self.refreshControl];
     [self.collectionView insertSubview:self.refreshControl atIndex:0];
     
+    
+        ///The delegate of the search bar is this view controller
     _searchBar.delegate = self;
     
     
@@ -64,29 +71,48 @@
     // Do any additional setup after loading the view.
 }
 
+
+/// This method shows the cancel button
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = YES;
 }
+
+/// This method makes the search bar first responder
+
 - (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = NO;
     self.searchBar.text = @"";
     [self.searchBar resignFirstResponder];
 }
+
+
+/// getMoviesNowPlaying
+/// This function fetch all the data from the API and store it in my Array arrayMoviesNowPlaying
+
+/// -Parameters:
+///     -None
+///
+
 -(void) getMoviesNowPlaying{
     [self.arrayMoviesNowPlaying removeAllObjects];
     NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
     
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/movie/now_playing?language=en-US&api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
-                                                       timeoutInterval:10.0];
+                                                       timeoutInterval:5.0];
     [request setHTTPMethod:@"GET"];
     [request setHTTPBody:postData];
-    
+
     NSURLSession *session = [NSURLSession sharedSession];
     NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
                                                 completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
                                                     if (error) {
                                                         NSLog(@"%@", error);
+                                                        UIAlertController * alert = [UIAlertController alertControllerWithTitle:@"Fail" message:@"Please check your network" preferredStyle:(UIAlertControllerStyleAlert)];
+                                                        UIAlertAction * action = [UIAlertAction actionWithTitle:@"Ok" style:(UIAlertActionStyleCancel) handler:nil];
+                                                        [alert addAction:action];
+                                                        [self presentViewController:alert animated:YES completion:nil];
+                                                        
                                                     } else {
                                                         NSDictionary * dataDictionary = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
                                                         NSArray *movies = dataDictionary[@"results"];
@@ -129,13 +155,17 @@
                                                         
                                                        
                                                     }
-                                                    [self.collectionView reloadData];
+                                                    
+                                                    [self.refreshControl endRefreshing];
+                                                    [self->_activityView stopAnimating];
+
+                                                    [self->_activityView setHidden:YES];
+                                                    
                                                     self.arrayMoviesNowPlayingFiltered = self.arrayMoviesNowPlaying;
+                                                    [self.collectionView reloadData];
                                                 }];
-    [self.refreshControl endRefreshing];
-    [self->_activityView setHidden:YES];
-    [self->_activityView stopAnimating];
-    
+ 
+
     [dataTask resume];
     
 }
@@ -158,6 +188,7 @@
 }
 */
 
+///Here I use the information in my array arrayMoviesNowPlaying and use that information to populate all my cells in the collection view
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     
     static NSString *celldentifier = @"cell";
@@ -165,9 +196,45 @@
     movieCellCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:celldentifier forIndexPath:indexPath];
     if (!myCell) {
     }
-    [myCell.imageMovie setImageWithURL: [_arrayMoviesNowPlayingFiltered[indexPath.row] movieImage]];
+
+
+
+    NSURLRequest *request = [NSURLRequest requestWithURL:[_arrayMoviesNowPlayingFiltered[indexPath.row] movieImage]];
+
+    [myCell.imageMovie setImageWithURLRequest:request placeholderImage:nil
+                                    success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+                                        
+                                        // imageResponse will be nil if the image is cached
+                                        if (imageResponse) {
+                                            NSLog(@"Image was NOT cached, fade in image");
+                                            myCell.imageMovie.alpha = 0.0;
+                               
+                                            myCell.imageMovie.image = image;
+                                            
+                                            //Animate UIImageView back to alpha 1 over 0.3sec
+                                            [UIView animateWithDuration:0.3 animations:^{
+                                                 myCell.imageMovie.alpha = 1.0;
+                               
+                                            }];
+                                        }
+                                        else {
+                                            NSLog(@"Image was cached so just update the image");
+                                            myCell.imageMovie.image = image;
+                                        }
+                                    }
+                                    failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                        // do something for the failure condition
+                                    }];
+    myCell.imageMovie.layer.cornerRadius = 15;
+
+    [myCell.imageMovie setClipsToBounds:YES];
+
     return myCell;
 }
+
+
+
+///This method filters all the movies using my array and creating a new one that is used to populate the cells
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     
     if (searchText.length != 0) {

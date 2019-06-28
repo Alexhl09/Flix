@@ -20,7 +20,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property NSMutableArray * arrayMoviesNowPlaying;
 @property NSArray * arrayMoviesNowPlayingFiltered;
 @property Movie * myMovieSelected;
-
+///Fetch all the data from the API
 -(void) getMoviesNowPlaying;
 @end
 
