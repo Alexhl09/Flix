@@ -31,10 +31,13 @@ static  Movie * mySelectedMovie;
     self.tableView.dataSource = self;
     myCategories = [[NSMutableArray alloc] init];
     myGenres = [NSMutableArray new];
-    [self getGenres];
     self.arrayMoviesNowPlaying = [NSMutableArray new];
-
-    [self getMoviesNowPlaying];
+    [self getGenres];
+    
+   
+    NSLog(@"aa");
+    
+       NSLog(@"bb");
     // Do any additional setup after loading the view.
 }
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -99,8 +102,8 @@ static  Movie * mySelectedMovie;
                                                         //                                                         [self.collectionView reloadData];
                                                         
                                                         
-                                                        
                                                     }
+                                                    [self->tableView reloadData];
                                                 }];
     
     
@@ -111,10 +114,14 @@ static  Movie * mySelectedMovie;
 ///Here i got the names of the genre and the id because with that information i can filter the movies
 -(void) getGenres{
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/genre/movie/list?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US"]
+
+    
+    NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
+    
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10.0];
-    [request setHTTPMethod:@"GET"];
+ 
 
     
     NSURLSession *session = [NSURLSession sharedSession];
@@ -132,10 +139,14 @@ static  Movie * mySelectedMovie;
                                                             Genre * myGenre = [[Genre alloc] initWith: valuesGenres[@"name"] :idGenre];
                                                             [self->myCategories addObject: myGenre];
                                                             [self->myGenres addObject: [NSString stringWithFormat:@"%@" , myGenre.name ]];
+                                                            NSLog(@"%@", valuesGenres[@"name"]);
                                                         }
                                                    
                                                     }
-                                                    [tableView reloadData];
+                                                    [self getMoviesNowPlaying];
+                                                    
+                                                    
+                                                    
                                                 }];
     [dataTask resume];
 }
@@ -164,6 +175,7 @@ static  Movie * mySelectedMovie;
         return [evaluatedObject.arrayGenres containsObject: @([self->myCategories[indexPath.section] idGenre])];
     }];
   
+
     cell.arrayMoviesNowPlaying = [NSArray new];
     cell.myController = self;
     cell.arrayMoviesNowPlaying = [self.arrayMoviesNowPlaying filteredArrayUsingPredicate:predicate];

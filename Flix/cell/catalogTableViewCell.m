@@ -22,7 +22,7 @@
 
     self.collectionView.delegate = self;
     self.collectionView.dataSource = self;
-
+    
 }
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
@@ -37,11 +37,9 @@
 - (nonnull __kindof UICollectionViewCell *)collectionView:(nonnull UICollectionView *)collectionView cellForItemAtIndexPath:(nonnull NSIndexPath *)indexPath {
     movieCategoryCollectionViewCell * cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell2" forIndexPath:indexPath];
     cell.layer.cornerRadius = 10;
+    
     [cell setClipsToBounds:YES];
-    if(arrayMoviesNowPlaying.count > 0){
-        NSLog(@"%@",[arrayMoviesNowPlaying[indexPath.row] movieImage]);
-         
-         }
+
     
     
     
