@@ -49,7 +49,7 @@
                                       success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                           
                                           // imageResponse will be nil if the image is cached
-                                          [UIView transitionWithView:cell.imageMovie duration:2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                          [UIView transitionWithView:cell.imageMovie duration:1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                                               [cell.imageMovie setImage:image];
                                           } completion:nil];
                                       }

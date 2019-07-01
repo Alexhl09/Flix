@@ -160,7 +160,24 @@
     movieCellCollectionViewCell *myCell = [collectionView dequeueReusableCellWithReuseIdentifier:celldentifier forIndexPath:indexPath];
     if (!myCell) {
     }
-    [myCell.imageMovie setImageWithURL: [_arrayMoviesNowPlayingFiltered[indexPath.row] movieImage]];
+    
+    
+    
+    NSURLRequest *request = [NSURLRequest requestWithURL:[_arrayMoviesNowPlayingFiltered[indexPath.row] movieImage]];
+    
+    [myCell.imageMovie setImageWithURLRequest:request placeholderImage:nil
+                                      success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
+                                          
+                                          [UIView transitionWithView:myCell.imageMovie duration:1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                              [myCell.imageMovie setImage:image];
+                                          } completion:nil];
+                                          
+                        
+                                      }
+                                      failure:^(NSURLRequest *request, NSHTTPURLResponse * response, NSError *error) {
+                                          // do something for the failure condition
+                                      }];
+  
     myCell.imageMovie.layer.cornerRadius = 15;
     [myCell.imageMovie setClipsToBounds:YES];
     return myCell;

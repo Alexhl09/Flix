@@ -14,11 +14,12 @@
 
 
 @interface CatalogViewController ()
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityView;
 
 @end
 
 @implementation CatalogViewController
-@synthesize tableView, myCategories,arrayMoviesNowPlaying,myGenres;
+@synthesize tableView, myCategories,arrayMoviesNowPlaying,myGenres,activityView;
 static  Movie * mySelectedMovie;
 /// This methods are the setter and getter of my static variable that staores the movie selected in the collection view
 + (Movie *) mySelectedMovie { return mySelectedMovie; }
@@ -26,10 +27,10 @@ static  Movie * mySelectedMovie;
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+   
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
-    myCategories = [[NSMutableArray alloc] init];
+    myCategories = [NSMutableArray new];
     myGenres = [NSMutableArray new];
     self.arrayMoviesNowPlaying = [NSMutableArray new];
     [self getGenres];
@@ -95,15 +96,20 @@ static  Movie * mySelectedMovie;
                                                             
                                                             
                                                             //                                                            Movie * myMovieToBeAdded = [Movie init]
-                                                            
+                                                           
+                                                       
                                                         }
+                                                        [self->activityView setHidden:YES];
+                                                        [activityView stopAnimating];
+                                                        [self->tableView reloadData];
+                                        
                                                         
                                                         
                                                         //                                                         [self.collectionView reloadData];
                                                         
-                                                        
+                                                   
                                                     }
-                                                    [self->tableView reloadData];
+                                             
                                                 }];
     
     
@@ -116,9 +122,9 @@ static  Movie * mySelectedMovie;
     
 
     
-    NSData *postData = [[NSData alloc] initWithData:[@"{}" dataUsingEncoding:NSUTF8StringEncoding]];
+
     
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/genre/movie/list?language=en-US&api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed"]
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@"https://api.themoviedb.org/3/genre/movie/list?api_key=a07e22bc18f5cb106bfe4cc1f83ad8ed&language=en-US"]
                                                            cachePolicy:NSURLRequestUseProtocolCachePolicy
                                                        timeoutInterval:10.0];
  
@@ -141,9 +147,11 @@ static  Movie * mySelectedMovie;
                                                             [self->myGenres addObject: [NSString stringWithFormat:@"%@" , myGenre.name ]];
                                                             NSLog(@"%@", valuesGenres[@"name"]);
                                                         }
-                                                   
+                                                        NSLog(@"A");
+                                                        NSLog(@"%@",dataDictionary);
+                                                                [self getMoviesNowPlaying];
                                                     }
-                                                    [self getMoviesNowPlaying];
+                                     
                                                     
                                                     
                                                     

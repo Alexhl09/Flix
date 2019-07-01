@@ -72,6 +72,9 @@
 }
 
 
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
 /// This method shows the cancel button
 - (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
     self.searchBar.showsCancelButton = YES;
@@ -205,7 +208,7 @@
     [myCell.imageMovie setImageWithURLRequest:request placeholderImage:nil
                                     success:^(NSURLRequest *imageRequest, NSHTTPURLResponse *imageResponse, UIImage *image) {
                                         
-                                        [UIView transitionWithView:myCell.imageMovie duration:2 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
+                                        [UIView transitionWithView:myCell.imageMovie duration:1 options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                                             [myCell.imageMovie setImage:image];
                                         } completion:nil];
                                         
