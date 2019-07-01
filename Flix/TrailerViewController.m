@@ -28,6 +28,12 @@
 }
 
 
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+
 ///This method gets the link that I need to request the web page where the trailer is.
 -(void) fetchTrailer{
     NSString * idMovieString = [NSString stringWithFormat:@"%i", idMovie];

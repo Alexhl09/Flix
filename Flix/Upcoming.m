@@ -182,6 +182,14 @@
     [myCell.imageMovie setClipsToBounds:YES];
     return myCell;
 }
+
+
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+
 - (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
     
     if (searchText.length != 0) {

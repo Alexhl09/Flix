@@ -35,6 +35,12 @@
     [self.movieDescription setContentOffset:CGPointZero animated:NO];
 }
 
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if([segue.identifier  isEqual: @"trailer"]){
         TrailerViewController * vc = [segue destinationViewController];

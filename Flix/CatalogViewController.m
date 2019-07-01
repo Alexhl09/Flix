@@ -46,6 +46,11 @@ static  Movie * mySelectedMovie;
 }
 
 
+
+- (BOOL)prefersStatusBarHidden {
+    return NO;
+}
+
 /// This method help me to get all the data and store it in the array of movies that i have
 -(void) getMoviesNowPlaying{
     [self.arrayMoviesNowPlaying removeAllObjects];
